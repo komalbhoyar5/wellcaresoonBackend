@@ -8771,3 +8771,11 @@ option {
   margin-top: 5px;
   display: block;
 }
+.logo_login{
+    width: 40%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.font-bold{
+  font-size: 18px;
+}

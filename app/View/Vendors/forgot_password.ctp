@@ -1,6 +1,9 @@
 <div class="loginColumns animated fadeInDown">
     <div class="row">
         <div class="col-md-6">
+            <div class="logo_login">
+                <img alt="<?php echo $company_name; ?>" class="img-responsive" src="<?php echo $this->webroot.$company_logo; ?>" style="margin-bottom: 15px;"/>
+            </div>
             <h2 class="font-bold">Welcome to <?php echo $company_name; ?> Admin Panel</h2>
 
             <p>
