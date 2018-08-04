@@ -50,7 +50,7 @@ class UsersController extends AppController {
 	}
 
 	public function logout() {
-		if ($this->Auth->user('group_id' == 4)) {
+		if ($this->Auth->user('group_id') == 4) {
 			$this->Auth->logout();
 			$this->redirect(array('controller'=>'vendors', 'action' => 'login'));
 		}else{
@@ -67,10 +67,15 @@ class UsersController extends AppController {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->write('Auth.User.f_name',$this->request->data['User']['f_name']);
 				$this->Session->write('Auth.User.l_name',$this->request->data['User']['l_name']);
-				$this->Session->write('Auth.User.Group.name',$this->request->data['User']['l_name']);
-				$this->Session->setFlash('The user has been saved.', '', array(), 'success');
+				if ($this->Auth->user('group_id') == '1' || $this->Auth->user('group_id') == '2') {
+					$this->loadModel('Group');
+					$group_id = $this->request->data['User']['group_id'];
+					$group = $this->Group->find('first', array('conditions' => array('id'=> $group_id)));
+					$this->Session->write('Auth.User.Group',$group['Group']);
+				}
+				$this->Session->setFlash('Your profile saved successfully.', '', array(), 'success');
 			} else {
-				$this->Session->setFlash('The user could not be saved. Please, try again.', '', array(), 'fail');
+				$this->Session->setFlash('Unable to update your profile. Please, try again.', '', array(), 'fail');
 			}
 		}
 		$this->request->data = $this->User->find('first', array('conditions'=>array('User.id' =>$id)));
@@ -163,60 +168,6 @@ class UsersController extends AppController {
 		$this->set('options', $options);
 	}
 
-	public function vendor_business_info(){
-		$this->layout = "backend_template";
-		$this->loadModel('VendorDetails');
-		$id = $this->Auth->user('id');
-
-		if ($this->request->is('post')) {
-			$details = $this->VendorDetails->find('first',array('conditions'=>array('user_id' => $id)));	
-			
-			$this->request->data['VendorDetails']['user_id'] = $id;
-			if ($details) {
-				$this->request->data['VendorDetails']['id'] = $details['VendorDetails']['id'];
-			}	
-			
-			if ($this->VendorDetails->save($this->request->data)) {
-				$this->Session->setFlash('The business details saved.', '', array(), 'success');
-			}else{
-				$this->Session->setFlash('The business details could not be saved. Please, try again.', '', array(), 'fail');
-			}
-			
-		}
-			$Component = $this->Components->load('General');
-			$return = $Component->GetCountries();
-			$this->set('countries', $return);
-			$details = $this->VendorDetails->find('first',array('conditions'=>array('user_id' => $id)));	
-			$this->request->data = $details;
-
-			$states = array();
-			if (isset($this->request->data['VendorDetails']['country'])) {
-				$states = $Component->GetState($this->request->data['VendorDetails']['country']);
-				$this->set('states', $states);
-			}
-	}
-
-	public function vendor_bank_details() {
-		$this->layout = "backend_template";
-		$this->loadModel('VendorDetails');
-		$id = $this->Auth->user('id');
-		if ($this->request->is('post')) {
-			$details = $this->VendorDetails->find('first',array('conditions'=>array('user_id' => $id)));	
-			
-			$this->request->data['VendorDetails']['user_id'] = $id;
-			if ($details) {
-				$this->request->data['VendorDetails']['id'] = $details['VendorDetails']['id'];
-			}	
-			
-			if ($this->VendorDetails->save($this->request->data)) {
-				$this->Session->setFlash('The business details saved.', '', array(), 'success');
-			}else{
-				$this->Session->setFlash('The business details could not be saved. Please, try again.', '', array(), 'fail');
-			}
-		}
-		$details = $this->VendorDetails->find('first',array('conditions'=>array('user_id' => $id)));	
-		$this->request->data = $details;
-	}
 
 	public function forgot_password() {
 		$this->layout = "login_backend";
@@ -234,8 +185,9 @@ class UsersController extends AppController {
 
 					$this->loadModel('Setting');
 					$company_details = $this->Setting->find('first', array('conditions'=>array('name'=>'company_name')));
+					$contact_email_id = $this->Setting->find('first', array('conditions'=>array('name'=>'contact_email_id')));
 
-					$return = $Component->sendForgotPasswordMail($user,$tokenKey,$company_details['Setting'], 'users');
+					$return = $Component->sendForgotPasswordMail($user,$tokenKey,$company_details['Setting'], 'users', $contact_email_id['Setting']['value']);
 
 					$this->Session->setFlash('The mail has been sent, please check your mail.', '', array(), 'success');
 				}else{

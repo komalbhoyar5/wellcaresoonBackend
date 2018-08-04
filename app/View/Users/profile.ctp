@@ -1,3 +1,4 @@
+<?php  echo $this->Html->css('../admin/css/plugins/iCheck/custom.css'); ?>
 <div class="row wrapper border-bottom white-bg page-heading wrapper-content">
     <div class="col-lg-10">
         <h2>Update your profile</h2>
@@ -89,7 +90,9 @@
                         </div>
                         <div class="hr-line-dashed col-md-12"></div>
                     </div>
-
+                    <?php
+                        if ($this->data['User']['group_id'] == '1' || $this->data['User']['group_id'] == '2') {
+                    ?>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">User type</label>
                         <div class="col-sm-10">
@@ -105,6 +108,27 @@
                             ?>
                         </div>
                     </div>
+                    <?php } ?>
+                    <?php
+                        if ($this->data['User']['group_id'] != '1' || $this->data['User']['group_id'] != '2') {
+                    ?>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Are you a doctor ?</label>
+                        <div class="col-sm-10">
+                            <div class="i-checks">
+                                <?php
+                                    echo $this->Form->input('User.is_doctor', array(
+                                        'options' => array('Yes'=>'Yes', 'No'=>'No'),
+                                        'type' => 'radio',
+                                        'label' => false,
+                                        'legend' => false,
+                                        'class'=> 'radiobtn'
+                                    ));
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
                     <div class="hr-line-dashed col-md-12"></div>
                     <div class="row">
                         <div class="col-md-12">
@@ -117,3 +141,12 @@
     </div>
 </div>
 <?php echo $this->element('backend_footer'); ?>
+<?php echo $this->Html->script('../admin/js/plugins/iCheck/icheck.min.js'); ?>
+<script>
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+</script>

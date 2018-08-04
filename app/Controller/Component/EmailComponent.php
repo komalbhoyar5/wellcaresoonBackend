@@ -5,7 +5,7 @@ App::import('Vendor', 'PHPMailer-master', array('file' => 'phpmailer/PHPMailerAu
 class EmailComponent extends Component {
     public $url = "rnrsoft.in/wellCareSoon/#/verify/";
 
-    public function sendMail($user, $temp_password, $company_details){
+    public function sendMail($user, $temp_password, $company_details, $contact_email_id){
         if( empty($user) )
             return false;
             $subject = "Welcome to ". $company_details["value"]."!";
@@ -26,11 +26,11 @@ class EmailComponent extends Component {
                     )
                 );
                 $mail->Username = 'wellcaresoon@rnrsoft.in';                 // SMTP username
-                $mail->Password = 'NCDub!H-NJ)g';                           // SMTP password
+                $mail->Password = 'wellcare2018';                           // SMTP password
                 $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
                 $mail->Port = 25;                                  // TCP port to connect to
 
-                $mail->setFrom('wellcaresoon@rnrsoft.in', $company_details["value"]);
+                $mail->setFrom($contact_email_id, $company_details["value"]);
 
                 //$mail->addAddress('aanturkar@tiuconsulting.com', 'LRS');     // Add a recipient
                 $mail->addAddress($user['email']);     // Add a recipient
@@ -48,10 +48,9 @@ class EmailComponent extends Component {
             } catch ( Exception $e ) {
                 return false;
             }
-        return true;
     }
 
-    public function sendCommonMail($user, $company_details, $subject, $message){
+    public function sendCommonMail($email, $company_details, $subject, $message){
         try {
                 $mail = new PHPMailer;
 
@@ -69,18 +68,18 @@ class EmailComponent extends Component {
                     )
                 );
                 $mail->Username = 'wellcaresoon@rnrsoft.in';                 // SMTP username
-                $mail->Password = 'NCDub!H-NJ)g';                           // SMTP password
+                $mail->Password = 'wellcare2018';                           // SMTP password
                 $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
                 $mail->Port = 25;                                  // TCP port to connect to
 
                 $mail->setFrom('wellcaresoon@rnrsoft.in', $company_details["value"]);
 
                 //$mail->addAddress('aanturkar@tiuconsulting.com', 'LRS');     // Add a recipient
-                $mail->addAddress($user['email']);     // Add a recipient
+                $mail->addAddress($email);     // Add a recipient
                 $mail->isHTML(true); 
                 $mail->Subject = $subject;
                 // welcomeMailTemplate.ctp
-                $templt_msg = $this->mailTemplate($user, $company_details, $message);
+                $templt_msg = $this->mailTemplate($company_details, $message);
                 $mail->Body = $templt_msg;
                 
                 if ($mail->send()) {
@@ -96,17 +95,45 @@ class EmailComponent extends Component {
         $webRoot = Router::url('/', true);
         $subject = 'Reset your password';
         $message = '<tr>
+                        <td>
+                            Hi '.$user["User"]["f_name"].' ' .$user["User"]["l_name"].',
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="content-block">
                             Please click on following link to change your password.
                         </td>
-                    <tr>
+                    </tr>
                     <tr>
                         <td class="content-block aligncenter">
                             <a href="'.$webRoot.$requestfrom.'/reset_password/'.$user["User"]["id"].'/'.$tokenKey.'" class="btn-primary">Reset password</a>
                         </td>
                     </tr>';
-        $this->sendCommonMail($user['User'], $company_details, $subject, $message);
+        $this->sendCommonMail($user['User']['email'], $company_details, $subject, $message);
     }
+
+    public function sendContactUsmailtoAdmin($postdata,$company_details, $contact_email_id){
+        $webRoot = Router::url('/', true);
+        $subject = 'Enquiry mail';
+        $message = '<tr>
+                        <td>Dear Admin,<br></td>
+                    </tr>
+                    <tr>
+                        <td class="content-block">
+                            You have new enquiry mail from <b>'.$postdata->name.'</b>, please see details below:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Name:</b> '.$postdata->name.' <br>
+                            <b>Email id:</b> '.$postdata->email.'<br>
+                            <b>Subject:</b> '.$postdata->subject.' <br>
+                            <b>Message:</b> '.$postdata->message.' <br>
+                        </td>
+                    </tr>';
+        return $this->sendCommonMail($contact_email_id, $company_details, $subject, $message);
+    }
+
     public function WelcomeMailTemplate($user, $temp_password,$company_details){
         $webRoot = Router::url('/', true);
         return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -369,7 +396,8 @@ class EmailComponent extends Component {
                 </html>
                 ';
     }
-    public function mailTemplate($user,$company_details, $message){
+
+    public function mailTemplate($company_details, $message){
         $webRoot = Router::url('/', true);
         return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -587,14 +615,9 @@ class EmailComponent extends Component {
                                                 <tr>
                                                     <td class="aligncenter"><img class="img-responsive" width="130px;" style=" margin-bottom: 3em;" src="http://rnrsoft.in/testing/'.$company_details["other"].'"/></td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="content-block" style="font-weight: 600; font-size: 16px;">
-                                                        Hello '.ucwords($user["f_name"]).' '.ucwords($user["l_name"]) .', 
-                                                    </td>
-                                                </tr>
                                                 '.$message.'
                                                 <tr>
-                                                    <td class="content-block">
+                                                    <td class="content-block"><br>
                                                         Kind regards, <br>
                                                        '. $company_details["value"].'
                                                     </td>

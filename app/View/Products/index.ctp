@@ -60,7 +60,8 @@
                 <?php
                     }
                 ?>
-				<th>Product</th>
+				<th>Product count</th>
+                <th>Status</th>
 				<th class="actions">Actions</th>
             </tr>
             </thead>
@@ -68,7 +69,6 @@
 
             	<?php 
                     if ($products) {
-                        echo "string";
                         foreach ($products as $product): ?>
         					<tr>
         					<td><?php echo h($product['Product']['id']); ?></td>
@@ -104,6 +104,18 @@
         					</td>
                             <?php } ?>
         					<td><?php echo h($product['Product']['product_count']); ?></td>
+                            <td>
+                                <?php 
+                                    if ($product['Product']['status'] == 'Active') { ?>
+                                        <button class="btn btn-primary btn-xs">Active</button>
+                                <?php
+                                    }else{
+                                ?>
+                                    <button class="btn btn-danger btn-xs">Inactive</button>
+                                <?php
+                                    }
+                                 ?>
+                            </td>
         					<td class="actions">
         						<?php echo $this->Html->link(__('View'), array('action' => 'view', $product['Product']['id']), array('class'=>'btn btn-xs btn-white')); ?>
         						<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $product['Product']['id']), array('class'=>'btn btn-xs btn-white')); ?>

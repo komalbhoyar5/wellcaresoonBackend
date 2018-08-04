@@ -12,6 +12,17 @@ class User extends AppModel {
         )
     );
 
+	public $hasMany = array(
+		'Address' => array(
+			'className' => 'Address',
+			'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+			// 'conditions' => array('Address.id'=>'User.category_id')
+		),
+	);
+
 	public $validate = array(
 		'f_name' => array(
 			'notEmpty' => array(
@@ -37,12 +48,6 @@ class User extends AppModel {
 			'isUnique' => array(
 				'rule' => array('isUnique'),
 				'message' => 'This email id Already Exists'
-			)
-		),
-		'password' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Password Cannot be Empty',
 			)
 		),
 		'password' => array(

@@ -26,7 +26,6 @@ class SettingsController extends AppController {
 		$Component = $this->Components->load('General');
 		$return = $Component->GetCountries();
 		$this->set('countries', $return);
-		print_r($return);
 		
 		$addr = $this->Setting->find('all', array('conditions'=>array('form_type'=>'company_address_details')));
 		$addr_details = array();
@@ -301,12 +300,12 @@ class SettingsController extends AppController {
 				}else{
 					$postdata['Setting']['9'] = array('name'=>'customer_care_no', 'form_type' => 'company_address_details', 'value'=> $postdata['customer_care_no']);
 				}
-				if (isset($addr_details['customercare_email_id'])) {
-					$postdata['Setting']['10'] = array('id' => $addr_details['customercare_email_id'], 'name'=>'customercare_email_id', 'form_type' => 'company_address_details', 'value'=> $postdata['customercare_email_id']);
+				if (isset($addr_details['contact_email_id'])) {
+					$postdata['Setting']['10'] = array('id' => $addr_details['contact_email_id'], 'name'=>'contact_email_id', 'form_type' => 'company_address_details', 'value'=> $postdata['contact_email_id']);
 				}else{
-					$postdata['Setting']['10'] = array('name'=>'customercare_email_id', 'form_type' => 'company_address_details', 'value'=> $postdata['customercare_email_id']);
+					$postdata['Setting']['10'] = array('name'=>'contact_email_id', 'form_type' => 'company_address_details', 'value'=> $postdata['contact_email_id']);
 				}	
-					
+				
 			}else{
 				$postdata['Setting'] = array(
 					'0' => array('name'=>'country', 'form_type' => 'company_address_details', 'value'=> $postdata['country']),
@@ -319,7 +318,8 @@ class SettingsController extends AppController {
 					'7' => array('name'=>'pincode', 'form_type' => 'company_address_details', 'value'=> $postdata['pincode']),
 					'8' => array('name'=>'office_address', 'form_type' => 'company_address_details', 'value'=> $postdata['office_address']),
 					'9' => array('name'=>'customer_care_no', 'form_type' => 'company_address_details', 'value'=> $postdata['customer_care_no']),
-					'10' => array('name'=>'customercare_email_id', 'form_type' => 'company_address_details', 'value'=> $postdata['customercare_email_id'])
+					'10' => array('name'=>'customercare_email_id', 'form_type' => 'company_address_details', 'value'=> $postdata['customercare_email_id']),
+					'11' => array('name'=>'contact_email_id', 'form_type' => 'company_address_details', 'value'=> $postdata['contact_email_id'])
 				);
 			}
 			if ($this->Setting->saveMany($postdata['Setting'])) {

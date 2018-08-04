@@ -34,8 +34,10 @@
                     <?php 
                         if ($user['User']['group_id'] == '4') {
                     ?>
-                    <li><a href="<?php echo $this->webroot; ?>users/vendor_business_info">Business information</a></li>
-                    <li><a href="<?php echo $this->webroot; ?>users/vendor_bank_details">bank details</a></li>
+                    <li><a href="<?php echo $this->webroot; ?>vendors/vendor_business_info">Business / pickup address</a></li>
+                    <li><a href="<?php echo $this->webroot; ?>vendors/compliance_details">Compliance details</a></li>
+                    <li><a href="<?php echo $this->webroot; ?>vendors/vendor_bank_details">bank details</a></li>
+                    <li><a href="<?php echo $this->webroot; ?>vendors/vendor_working_details">Business / Working calender</a></li>
                     <?php } ?>
                     <li><a href="<?php echo $this->webroot; ?>users/change_password">Change password</a></li>
                 </ul>

@@ -1,22 +1,14 @@
 <div class="loginColumns animated fadeInDown">
     <div class="row">
         <div class="col-md-6">
-            <h2 class="font-bold">Welcome to <?php echo $company_name; ?> Admin Panel</h2>
-
+            <img src="<?php echo $this->webroot. $company_logo; ?>" alt="<?php echo $company_name; ?>" style="width:40%;">
+            <h2 class="font-bold">Admin portal login</h2>
             <p>
-                Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+                
             </p>
-
+            <p><?php echo $company_name; ?></p>
             <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-            </p>
-
-            <p>
-                When an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            </p>
-
-            <p>
-                <small>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</small>
+                Manage the administrative settings and configurations, users, vendors, product categories, products, discounts and various approvals.
             </p>
         </div>
         <div class="col-md-6">
@@ -71,7 +63,7 @@
                     <a class="btn btn-sm btn-white btn-block" href="<?php echo $this->webroot; ?>users/register">Create an account</a> -->
                 </form>
                 <p class="m-t">
-                    <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small>
+                    <center><small>Copyright &copy; <?php echo date("Y"); ?> <?php echo $company_name; ?></small></center>
                 </p>
             </div>
         </div>
@@ -79,10 +71,10 @@
     <hr/>
     <div class="row">
         <div class="col-md-6">
-            Copyright Example Company
+            <!-- Copyright Example Company -->
         </div>
         <div class="col-md-6 text-right">
-           <small>© 2014-2015</small>
+           <!-- <small>© 2018-</small> -->
         </div>
     </div>
 </div>

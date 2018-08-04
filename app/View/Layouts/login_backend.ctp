@@ -50,7 +50,7 @@
                             showMethod: 'slideDown',
                             timeOut: 4000
                         };
-                        toastr.success('<?php echo $success; ?>', 'Welcome to Admin panel');
+                        toastr.success('<?php echo $success; ?>', 'Success');
 
                     }, 1300);
                 </script>

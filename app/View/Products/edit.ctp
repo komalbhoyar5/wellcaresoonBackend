@@ -1,6 +1,7 @@
 <?php  echo $this->Html->css('../admin/css/plugins/summernote/summernote.css'); ?>
 <?php  echo $this->Html->css('../admin/css/plugins/summernote/summernote-bs3.css'); ?>
 <?php echo $this->Html->css('../admin/css/plugins/chosen/bootstrap-chosen.css'); ?>
+<?php  echo $this->Html->css('../admin/css/plugins/iCheck/custom.css'); ?>
 
 <div class="row wrapper border-bottom white-bg page-heading wrapper-content">
     <div class="col-lg-10">
@@ -275,7 +276,27 @@
                                             </div>
                                             <div class="hr-line-dashed col-md-12"></div>
                                         </div>
-
+                                        <?php
+                                            if ($this->data['User']['group_id'] == '1' || $this->data['User']['group_id'] == '2') {
+                                        ?>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Status</label>
+                                            <div class="col-sm-10">
+                                                <div class="i-checks">
+                                                    <?php
+                                                        echo $this->Form->input('Product.status', array(
+                                                            'options' => array('Active'=>'Active', 'Inactive'=>'Inactive'),
+                                                            'type' => 'radio',
+                                                            'label' => false,
+                                                            'legend' => false,
+                                                            'class'=> 'radiobtn'
+                                                        ));
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        <div class="hr-line-dashed col-md-12"></div>
+                                        </div>
+                                        <?php } ?>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Upload images<span>*</span></label>
                                             <div class="col-sm-10">
@@ -416,4 +437,13 @@
     }
     $('.chosen-select').chosen({width: "100%"});
     
+</script>
+<?php echo $this->Html->script('../admin/js/plugins/iCheck/icheck.min.js'); ?>
+<script>
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
 </script>

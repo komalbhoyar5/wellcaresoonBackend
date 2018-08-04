@@ -288,7 +288,23 @@
                         ?>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email id for contact us</label>
+                        <div class="col-sm-9">
+                            <?php
+                            echo $this->Form->input(
+                                'contact_email_id',
+                                array(
+                                    'class' => 'form-control',
+                                    'label' => false,
+                                    'required' => true,
+                                    'type' => 'text',
+                                    'value' => isset($addr_details['contact_email_id']) ? $addr_details['contact_email_id'] : ''
+                                )
+                            );
+                        ?>
+                        </div>
+                    </div>
                     <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
                         <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">Submit</button>
@@ -301,59 +317,6 @@
         </div>
     </div>
     <div class="col-lg-5">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Change password</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <?php echo $this->Form->create('User', array( 'action' => "change_password", 'class'=>"form-horizontal")); ?>
-
-                    <p>Enter your old password and new password.</p>
-                    <div class="form-group"><label class="col-lg-5 control-label">Password<span>*</span></label>
-                        <div class="col-lg-7">
-                            <?php
-                                echo $this->Form->input(
-                                    'password',
-                                    array(
-                                        'class' => 'form-control',
-                                        'label' => false,
-                                        'placeholder' => "New Password"
-                                    )
-                                );
-                            ?>
-                        </div>
-                    </div>
-                    <div class="form-group"><label class="col-lg-5 control-label">Confirm password<span>*</span></label>
-                        <div class="col-lg-7">
-                             <?php
-                                echo $this->Form->input(
-                                    'confirm_password',
-                                    array(
-                                        'class' => 'form-control',
-                                        'label' => false,
-                                        'type' => 'password',
-                                        'placeholder' => "Confirm Password"
-                                    )
-                                );
-                            ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">Submit</button>
-                        </div>
-                    </div>
-                <?php echo $this->Form->end(); ?>
-            </div>
-        </div>
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Currency setting</h5>

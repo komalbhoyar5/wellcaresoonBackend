@@ -3,7 +3,7 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Brand master</h2>
+        <h2>Slider master</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="<?php echo $this->webroot; ?>dashboard">Home</a>

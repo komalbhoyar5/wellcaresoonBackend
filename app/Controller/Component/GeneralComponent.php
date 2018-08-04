@@ -193,5 +193,27 @@ class GeneralComponent extends Component {
             return $d;
         }
     }
-
+    public function getCountryname($country_id){
+        $country = "";
+        $countrycitylist = $this->GetCountriesState();
+        foreach ($countrycitylist as $countries) {
+            $country = $countries[$country_id]['CountryName'];
+        }
+        return $country;
+    }
+    public function getStatename($state_id, $country_id){
+        $stateArray = array();
+        $countrycitylist = $this->GetCountriesState();
+        foreach ($countrycitylist as $countries) {
+            $country = $countries[$country_id];
+        }
+        foreach ($country as $stateslist) {
+            if (count($stateslist) > 0 && is_array($stateslist)) {
+                foreach ($stateslist as $states) {
+                    $stateArray[] = $states['StateName'];
+                }
+            }
+        }
+        return $stateArray[$state_id];
+    }
 };
